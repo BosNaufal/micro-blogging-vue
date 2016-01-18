@@ -1,0 +1,45 @@
+{
+  "name": "bos-notes",
+  "version": "0.0.1",
+  "description": "Mini Note App for developer who love to code",
+  "main": "index.html",
+  "devDependencies": {
+    "babel-runtime": "^6.2.0",
+    "browserify": "^13.0.0",
+    "browserify-fs": "^1.0.0",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-util": "^3.0.7",
+    "minifyify": "^7.1.0",
+    "vinyl-source-stream": "^1.1.0",
+    "vue": "^1.0.7",
+    "vue-hot-reload-api": "^1.2.1",
+    "vue-router": "^0.7.7",
+    "vueify": "^5.0.4",
+    "vueify-insert-css": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BosNaufal/micro-blogging-vue.git"
+  },
+  "keywords": [
+    "micro",
+    "app",
+    "blogging",
+    "note",
+    "blogging",
+    "system",
+    "vue",
+    "es6"
+  ],
+  "author": "Naufal Rabbani (Bos Naufal)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BosNaufal/micro-blogging-vue/issues"
+  },
+  "homepage": "https://github.com/BosNaufal/micro-blogging-vue#readme"
+}
