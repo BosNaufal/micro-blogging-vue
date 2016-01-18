@@ -6,7 +6,7 @@
 			catPosts: [],
 			sideMenuShow: true,
 		},
-		updateMateris: function (materis,cb) {
+		'materis:update': function (materis,cb) {
 			this.store.materis = materis;
 			if(cb != null){
 				cb({
@@ -14,19 +14,16 @@
 					materis: materis
 				});
 			}
-			log('flux','updateMateris() :', materis);
+			log('flux','materis:update() :', materis);
 		},
-		updateSingle: function (single) {
+		'single:update': function (single) {
 			this.store.single = single;
-			log('flux','updateSingle() :', single);
+			log('flux','single:update() :', single);
 		},
-		updateCatPosts: function (catPosts) {
-			this.store.catPosts = catPosts;
-			log('flux','updateCatPosts() :', catPosts);
-		},
-		updateSideMenuShow: function () {
+	
+		'sidemenu:toggle': function () {
 			this.store.sideMenuShow = !this.store.sideMenuShow;
-			log('flux','updateSideMenuShow() :', this.store.sideMenuShow);
+			log('flux','sidemenu:toggle() :', this.store.sideMenuShow);
 		}
 	};
 </script>

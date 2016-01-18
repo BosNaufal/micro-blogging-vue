@@ -89,7 +89,7 @@ a
 
 	&:hover, &.v-link-active
 		text-decoration: none
-		color: #8106FF
+		color: $link
 
 img
 	width: 100%
@@ -157,16 +157,21 @@ h1,h2,h3,h4,h5,h6,b
 	display: inline-block
 
 pre
-	background: #f8f8f8!important
-	border: 0
+	background: #272822 !important
+	// border: 0
 	font-size: 15px
 	padding-left: 25px !important
 	margin-bottom: 20px !important
 
 
 pre,code
-	color: #464646 !important
-	font-family: "Roboto Mono", monospace !important
+	// color: #5F5F5F !important
+	// font-family: monospace !important
+	// line-height: 1.7 !important
+	// font-family: "Roboto Mono", monospace !important
+
+p code
+	color: $link !important
 
 .scroll
 	overflow-y: auto
@@ -214,7 +219,7 @@ pre,code
 					color: #868686
 
 					&:hover, &.v-link-active
-						color: #8106FF
+						color: $primary
 
 		li
 			font-size: 15px
@@ -222,10 +227,10 @@ pre,code
 			color: #868686
 
 			a
-				color: #FF7435
+				color: $secondary
 
 				&:hover
-					color: #FF7435
+					color: $secondary
 
 .hide-sidemenu
 	@extend .transition
@@ -234,18 +239,18 @@ pre,code
 	padding: 9px 15px
 	font-size: 25px
 	bottom: 56px
-	background: #8106FF
+	background: $primary
 	line-height: 0
 	color: white
 	left: 9%
-	border: 3px solid #8106FF
+	border: 3px solid $primary
 	border-radius: 5px
 
 	&:focus
 		color: white
 
 	&:hover, &.active, &:active,
-		color: #8106FF
+		color: $primary
 		background: white
 
 	&.active
@@ -305,10 +310,10 @@ pre,code
 	&title
 		font-size: 41px
 		a
-			color: #8106FF
+			color: $primary
 
 	&category
-		color: #FF7435
+		color: $secondary
 
 	&body
 		font-size: 19px
@@ -342,18 +347,22 @@ span.devider
 	ol
 		margin: 0
 		border-radius: 0
-		background: #271D15
+		background: $ternary
 
 		li
 			a
 				color: #EAEAEA
 
 				&:hover
-					color: #FF7435
+					color: $secondary
 
 iframe
 	width: 100%
 	min-height: 300px
+
+.pagination__container
+	float: none
+	margin-top: -50px
 
 // --- IMPORT RESPONSIVE ----------------
 @import responsive

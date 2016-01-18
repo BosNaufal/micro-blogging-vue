@@ -31,8 +31,6 @@
 
 	</div>
 
-
-
 	<div class="bottom-nav">
 		<ol class="breadcrumb">
 			<li><a href="#!/post/all">Home</a></li>
@@ -58,9 +56,12 @@
 				inputan: "",
 			};
 		},
+
 		watch: {
+
 			cat: function (val,old) {
 				var self = this;
+
 				if(val != ""){
 					var category = val.split(', ');
 					var last = _.last(category);
@@ -92,8 +93,10 @@
 					this.category = "";
 				}
 			}
+
 		},
 		methods: {
+
 			focusMode: function () {
 				this.focus = !this.focus;
 				if(focus){
@@ -101,52 +104,59 @@
 					Prism.highlightAll();
 				}
 			},
+
 			showCode:function () {
 				$.getScript('./js/prism.js');
 				Prism.highlightAll();
 			},
+
 			save: function () {
 				var self = this;
+
 				if(!this.judul && !this.content && !this.cat){
 					alert('Isi Sepenuhnya');
 					return false;
 				}
-				var y = confirm('Selesai Mengedit?');
-				if(!y){
+
+				if(!confirm('Selesai Mengedit?')){
 					return false;
 				}
+
 				var kategori = self.cat.split(', ');
+
 				if(_.last(kategori) == ""){
 					kategori.splice(kategori.length - 1);
 				}
+
 				var post = {
 					judul: self.judul,
 					tgl: moment().format('DD-MM-YYYY'),
 					kategori: _.uniq(kategori),
 					content: this.inputan
 				};
+
 				if(this.$route.query.for == "edit"){
 					db.materi.update(self.id,post).then(function () {
-						router.go('/post/'+post.judul);
-						log('component','editor-page update:',post);
+						router.go('/post/'+post.id);
 					});
 				}else{
 					db.materi.add(post).then(function () {
-						router.go('/post/'+post.judul);
-						log('component','editor-page save:',post);
+						router.go('/post/'+post.id);
 					});
 				}
 			},
+
 			hapus: function (id) {
-				var y = confirm('Selesai Mengedit?');
-				if(!y){
+				if(!confirm('Yakin Hapus Pos Ini?')){
 					return false;
 				}
 				db.materi.where("id").equals(id).delete().then(function () {
 					router.go('/post/all');
 				});
-			},
+			}
+
 		},
+
 		created: function () {
 			if(this.$route.query.for == "edit"){
 				this.id = this.flux.single.id;

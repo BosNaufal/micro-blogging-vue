@@ -3,231 +3,167 @@
 
 		<div id="content" class="main__content">
 
-			<div class="post__container" v-for="materi in materis | orderBy 'tgl' -1 | limitBy limit offset" v-if="judul == 'all'">
-				<h2 class="post__title"><a href="#!/post/{{ materi.judul }}">{{ materi.judul }}</a></h2>
+			<div class="post__container" v-for="content in contents | orderBy 'tgl' -1 | limitBy limit offset">
+				<h2 class="post__title"><a href="#!/post/{{ content.id }}">{{ content.judul }}</a></h2>
 				<p class="post__date">
-					<i class="fa fa-calendar"></i> Last Update: {{ materi.tgl }}
+					<i class="fa fa-calendar"></i> Last Update: {{ content.tgl }}
 					<span class="devider">|</span>
 					<i class="fa fa-tags"></i>
-						<a v-for="cat in materi.kategori" v-link="{path:'/post/cat-'+cat}" class="post__category">{{ cat }}<span v-if="$index != materi.kategori.length - 1">, </span></a>
+					<a v-for="cat in content.kategori" v-link="{path:'/post/cat-'+cat}" class="post__category">{{ cat }}<span v-if="$index != content.kategori.length - 1">, </span></a>
+					<span class="devider">|</span>
+					<a href="#" @click.prevent="edit(content)"> <i class="fa fa-pencil"></i> Edit</a></p>
 				</p>
-				<div class="post__body" v-html="materi.content | markdown"></div>
-				<hr v-if="$index != materis.length - 1" />
+				<div class="post__body" v-html="content.content | markdown"></div>
+				<hr v-if="$index != content.length - 1" />
 			</div>
 
-			<div class="post__container" v-for="materi in catPosts | orderBy 'tgl' -1 | limitBy limit offset" v-if="catPosts.length != 0">
-				<h2 class="post__title"><a href="#!/post/{{ materi.judul }}">{{ materi.judul }}</a></h2>
-				<p class="post__date">
-					<i class="fa fa-calendar"></i> Last Update: {{ materi.tgl }}
-					<span class="devider">|</span>
-					<i class="fa fa-tags"></i>
-						<a v-for="cat in materi.kategori" v-link="{path:'/post/cat-'+cat}" class="post__category">{{ cat }}<span v-if="$index != materi.kategori.length - 1">, </span></a>
-				</p>
-
-				<div class="post__body" v-html="materi.content | markdown"></div>
-				<hr v-if="$index != catPosts.length - 1" />
-			</div>
-
-			<div class="post__container" v-for="materi in single" v-if="judul != 'all' && single.length != 0 && catPosts == 0">
-				<h2 class="post__title">{{ materi.judul }}</h2>
-				<p class="post__date"><i class="fa fa-calendar"></i> Last Update: {{ materi.tgl }}
-					<span class="devider">|</span>
-					<i class="fa fa-tags"></i> <a v-for="cat in materi.kategori" v-link="{path:'/post/cat-'+cat}" class="post__category">{{ cat }}<span v-if="$index != materi.kategori.length - 1">, </span></a>
-					<span class="devider">|</span>
-					<a href="#" @click.prevent="edit(materi)"> <i class="fa fa-pencil"></i> Edit</a></p>
-				<ol class="breadcrumb" :class="{ 'text-center' : !flux.sideMenuShow }">
-					<li><a v-link="{path:'/post/all'}">All</a></li>
-					<li v-for="cat in materi.kategori"><a v-link="{path:'/post/cat-'+cat}" class="post__category">{{ cat }}</a></li>
-					<li><a v-link="{path:'/post/'+materi.judul}">{{ materi.judul }}</a></li>
-				</ol>
-				<div class="post__body" v-html="materi.content | markdown"></div>
-			</div>
-
-			<div class="col-md-3 center-block" style="float:none;margin-top:-50px;" v-show="showPagination">
+			<div class="col-md-3 center-block text-center pagination__container" v-show="pagination.length != 1">
 				<ul class="pagination">
 					<li v-for="page in pagination" :class="{ 'active' : $index + 1 == $route.query.page }">
 						<a v-link="{ path: page.link }" class="page" >{{ $index + 1 }}</a>
 					</li>
 				</ul>
 			</div>
+
 			<div class="clearfix"></div>
+
 		</div>
 	</div>
 </template>
 
 <script>
-	module.exports = {
-		data: function () {
+	export default {
+		data() {
 			return{
 				flux: Flux.store,
-				size: 3,
 				judul: this.$route.params.judul,
 				materis: Flux.store.materis,
+				contents: [],
 				cat: "",
-				single: {},
-				catPosts: [],
 				limit: 5,
-				offest: 0,
+				offset: 0,
 				pagination: [],
-				showPagination: true,
 			};
 		},
+
 		watch:{
-			'flux.sideMenuShow': function (val,old) {
-				if(val){
-					this.size = 3;
-				}else{
-					this.size = 0;
+
+			'$route.query.page'(val,old) {
+				val ? true : this.$emit('page:check',val);
+				this.$emit('page:get',val);
+			},
+
+			'$route.params.judul'(val,old) {
+				this.$emit('page:change',val);
+			},
+		},
+
+		methods:{
+			edit(materi) {
+				Flux['single:update'](materi);
+				router.go('/editor?for=edit');
+			}
+		},
+
+		events: {
+
+			'page:check'(page) {
+				if(!parseFloat(this.judul)){
+					if(page == undefined){
+						router.go('?page=1');
+						return false;
+					}
 				}
 			},
-			'$route.query.page': function (val,old) {
-				var self = this;
-				var page = parseFloat(val);
-				if(page == 1 || page == 0){
+
+			// Handle : when query params is changed
+			// Affect : Change the limit and offset for showing the post
+			'page:get'(nomor) {
+				let self = this;
+				let page = parseFloat(nomor);
+				if(page == 1 || page == 0 ){
 					self.limit = 5;
 					self.offset = 0;
 				}else{
 					self.limit = ( page - 1 ) * 5;
 					self.offset = ( page - 1 ) * 5;
 				}
-				$.getScript('./js/prism.js', function () {
-					Prism.highlightAll();
-				});
+
+				self.$emit('code:highlight');
 			},
-			'$route.params.judul': function (val,old) {
-				var self = this;
-				this.judul = val;
-				var page = this.$route.query.page;
-				if(page == undefined && val == 'all'){
-					router.go({path:'/post/all?page=1'});
-				}
-				if(val == 'all'){
-					self.pagination = [];
-					var jumlahPage = self.materis.length / 5;
-					jumlahPage = Math.ceil(jumlahPage);
 
-					for(var i = 0; i < jumlahPage; i++){
-						self.pagination.push({
-							link: '/post/all?page='+(i+1)
-						});
-					}
-					self.showPagination = true;
-				}
-				var cat = val.indexOf('cat-');
-				if( cat != -1){
-					var catPosts = [];
-					for(var i in this.materis){
-						var materi = this.materis[i];
-						var cat = materi.kategori;
-						for(var i in cat){
-							if(cat[i] == val.substr(4)){
-								catPosts.push(materi);
-							}
-						}
-					}
-					self.catPosts = catPosts;
+			'code:highlight'() {
+				$('body').animate({scrollTop: 0});
 
-					var jumlahPage = self.catPosts.length / 5;
-					jumlahPage = Math.ceil(jumlahPage);
-
-					self.pagination = [];
-
-					for(var i = 0; i < jumlahPage; i++){
-						self.pagination.push({
-							link: '/post/'+val+'?page='+(i+1)
-						});
-					}
-
-					Flux.updateCatPosts(catPosts);
-
-					if(self.$route.query.page == undefined){
-						router.go({path:'/post/'+val+'?page=1'});
-					}
-
-					self.showPagination = true;
-
-				}else{
-					self.catPosts = [];
-					var single = _(this.materis).where({judul:this.judul}).value();
-					this.single = single;
-					Flux.updateSingle(single);
-					self.showPagination = false;
-				}
-
-				$.getScript('./js/prism.js', function () {
+				$.getScript('./js/prism.js', () => {
 					Prism.highlightAll();
 				});
-				setTimeout(function () {
+				setTimeout( () => {
 					$('pre').hide();
 				});
-				setTimeout(function () {
+				setTimeout( () => {
 					$('pre').show();
 					$('pre').addClass('animated fadeIn');
 				},450);
 			},
-		},
-		methods:{
-			edit: function (materi) {
-				Flux.updateSingle(materi);
-				router.go('/editor?for=edit');
-			}
-		},
-		created: function () {
-			var self = this;
 
-			var jumlahPage = self.materis.length / 5;
-			jumlahPage = Math.ceil(jumlahPage);
+			'page:change'(val) {
+				let self = this;
 
-			for(var i = 0; i < jumlahPage; i++){
-				self.pagination.push({
-					link: '/post/all?page='+(i+1)
-				});
-			}
+				this.judul = val;
+				let page = this.$route.query.page;
 
-			var page = this.$route.query.page;
-			var judul = this.$route.params.judul;
-			if(page == undefined && judul == "all"){
-				router.go({path:'/post/all?page=1'});
-			}
-			page = parseFloat(page);
-			if(page == 1){
-				self.limit = 5;
-				self.offset = 0;
-			}else{
-				self.limit = ( page - 1 ) * 5;
-				self.offset = ( page - 1 ) * 5;
-			}
+				this.$emit('page:check',page);
 
-			var val = this.$route.params.judul;
-			var cat = val.indexOf('cat-');
-			if( cat != -1){
-				var catPosts = [];
-				for(var i in this.materis){
-					var materi = this.materis[i];
-					var cat = materi.kategori;
-					for(var i in cat){
-						if(cat[i] == val.substr(4)){
-							catPosts.push(materi);
-						}
+				this.contents = [];
+
+				// All Posts
+				if(val == "all"){
+					this.contents = this.materis;
+				}
+
+				// Categorizing Posts
+				let cat = val.indexOf('cat-');
+				if(cat != -1){
+					this.materis.forEach(materi => {
+						let cats = materi.kategori;
+						cats.forEach(cat => {
+							if(cat == val.substr(4)){
+								this.contents.push(materi);
+							}
+						});
+					});
+				}
+
+				// If a Single Post
+				let postId = parseFloat(val)
+				if(postId){
+					if(!page) router.go(this.judul); // Remove Query Params
+					this.contents = _(this.materis).where({id:postId}).value();
+					Flux['single:update'](this.$get('contents'));
+					this.limit = 1;
+					this.offset = 0;
+				}
+
+				// Make a Pagination
+				let jumlahPage = Math.ceil(this.contents.length / 5);
+				this.pagination = [];
+				if(!postId){
+					for(let i = 0; i < jumlahPage; i++){
+						this.pagination.push({
+							link: '/post/'+val+'?page='+(i+1)
+						});
 					}
 				}
-				self.catPosts = catPosts;
-				Flux.updateCatPosts(catPosts);
+
+				this.$emit('code:highlight');
 			}
-			var single = _(this.materis).where({judul:this.judul}).value();
-			this.single = single;
+
 		},
-		ready: function () {
-			$.getScript('./js/prism.js',function () {
-				Prism.highlightAll();
-			});
-			setTimeout(function () {
-				$('pre').hide();
-			})
-			setTimeout(function () {
-				$('pre').show();
-				$('pre').addClass('animated fadeIn');
-			},750)
+
+		ready() {
+			this.$emit('page:change',this.$route.params.judul);
 		}
+
 	}
 </script>

@@ -28,7 +28,7 @@
 		},
 		methods: {
 			hideSidemenu: function () {
-				Flux.updateSideMenuShow();
+				Flux['sidemenu:toggle']();
 			}
 		},
 		created: function () {
@@ -38,16 +38,12 @@
 				router.go('/post/all');
 			}
 
-
 			db.materi.toArray(function (data) {
-				Flux.updateMateris(data,function (data) {
+				Flux['materis:update'](data,function (data) {
 					self.doneLoad = true;
 				});
 			});
 
-		},
-		ready: function () {
-			var self = this;
 		}
 	};
 </script>

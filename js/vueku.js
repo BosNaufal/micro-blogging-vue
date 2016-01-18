@@ -33,12 +33,15 @@ db.materi.count(function (jmlh) {
 		});
 	}
 	db.materi.count(function (jmlh) {
-		log('component', 'Pastikan Angka > 0:', jmlh);
+		log('component', '[Vueku.js] Pastikan Angka > 0:', jmlh);
 	})
 });
 
+
 var VueRouter = require('./vue-router.min');
+
 Vue.use(VueRouter);
+
 global.router = new VueRouter();
 
 global.Flux = require('../vue/flux.vue');
@@ -51,6 +54,7 @@ Vue.filter('markdown', function (value) {
 	var md = marked(value);
 	return md;
 });
+
 Vue.filter('previewEditor', function (value) {
 	var text = JSON.stringify(value);
 	text = text.replace(/"/g,"");
