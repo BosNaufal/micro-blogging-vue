@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Virtual Element JS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="./src/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/css/oneui.min.css">
+    <!-- <link rel="stylesheet" href="./src/css/pikaday.css"> -->
+    <!-- <link rel="stylesheet" href="./src/css/canvas-editor.css"> -->
+	</head>
+	<body>
+
+    <h1 class="text-center canvas-title">Canvas Editor</h1>
+
+    <!-- CANVAS TOOLBAR -->
+    <canvas-toolbar></canvas-toolbar>
+
+
+    <!-- CANVAS MAIN EDITOR -->
+    <canvas-editor>
+      <canvas-sub-editor>
+        <p>
+          <canvas-editable popover="companies-act">
+            <code>Bos Team</code>
+          </canvas-editable>
+          <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni at, omnis atque expedita eligendi tenetur. A fugiat odit, expedita perspiciatis saepe </span>
+          <canvas-editable popover="nama-klien">
+            <code>Nama klien</code>
+          </canvas-editable>
+          <span>delectus facere nisi harum sapiente error beatae non</span>
+          <canvas-editable popover="tanggalan">
+            <code>25-04-2016</code>
+          </canvas-editable>
+          <span>veritatis iste, optio, eos ad totam earum officiis fuga voluptatem eveniet. Voluptatibus quod, maiores.</span>
+        </p>
+
+        <!-- CANVAS LIST -->
+        <canvas-list>
+          <canvas-sub-editor>
+            <p>
+              <canvas-editable popover="dari-list">
+                <code>Editable Dari List</code>
+              </canvas-editable>
+              <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, harum dolores. Eum quod dignissimos quae dolor, minus officia sed nisi blanditiis repellendus cumque. Iste aut ad assumenda deserunt vel, sunt.</span>
+            </p>
+          </canvas-sub-editor>
+
+          <canvas-sub-editor>
+            <p>
+              <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, harum dolores. Eum quod dignissimos quae dolor.</span>
+            </p>
+          </canvas-sub-editor>
+        </canvas-list>
+      </canvas-sub-editor>
+
+
+      <canvas-sub-editor>
+        <p>
+          <canvas-editable popover="popover-lain">
+            <code>Checkbox 1, Checkbox 2</code>
+          </canvas-editable>
+
+          <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, harum dolores. Eum quod dignissimos quae dolor, minus officia sed nisi blanditiis.</span>
+
+          <canvas-editable popover="popover-radio">
+            <code>Radio 1</code>
+          </canvas-editable>
+
+          <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
+        </p>
+      </canvas-sub-editor>
+    </canvas-editor>
+
+
+    <!-- CANVAS POPOVER -->
+    <canvas-popover name="companies-act">
+      <h3 class="title">Popover Select</h3>
+      <p class="description">This is a long description for long information</p>
+      <div class="main-input">
+        <select popover-input>
+          <option value="Bos Team">Bos Team</option>
+          <option value="Dream Team">Dream Team</option>
+        </select>
+      </div>
+    </canvas-popover>
+
+    <canvas-popover name="nama-klien">
+      <h3 class="title">Nama Klien</h3>
+      <p class="description">This is a long description for long information</p>
+      <div class="main-input">
+        <input type="text" popover-input>
+      </div>
+    </canvas-popover>
+
+    <canvas-popover name="tanggalan">
+      <h3 class="title">Tanggalan</h3>
+      <p class="description">This is a long description for long information</p>
+      <div class="main-input">
+        <input type="text" popover-input="date" format="DD-MM-YYYY">
+      </div>
+    </canvas-popover>
+
+    <canvas-popover name="dari-list">
+      <h3 class="title">Popover Dari list</h3>
+      <p class="description">This is a long description for long information</p>
+      <div class="main-input">
+        <input type="text" popover-input>
+      </div>
+    </canvas-popover>
+
+    <canvas-popover name="popover-lain">
+      <h3 class="title">Popover Checkbox</h3>
+      <p class="description">This is a long description for long information</p>
+      <div class="main-input">
+        <input type="text" popover-input>
+        <div popover-radio-check>
+          <input type="checkbox" value="Checkbox 1"/>
+          <label>Checkbox 1</label>
+
+          <input type="checkbox" value="Checkbox 2"/>
+          <label>Checkbox 2</label>
+
+          <input type="checkbox" value="Checkbox 3"/>
+          <label>Checkbox 3</label>
+        </div>
+      </div>
+    </canvas-popover>
+
+    <canvas-popover name="popover-radio">
+      <h3 class="title">Popover Radio</h3>
+      <p class="description">This is a long description for long information</p>
+      <div class="main-input">
+        <input type="text" popover-input>
+        <div popover-radio-check>
+          <input type="radio" value="Radio 1"/>
+          <label>Radio 1</label>
+
+          <input type="radio" value="Radio 2"/>
+          <label>Radio 2</label>
+
+          <input type="radio" value="Radio 3"/>
+          <label>Radio 3</label>
+        </div>
+      </div>
+    </canvas-popover>
+
+		<script src="./dist/canvas-editor.js"></script>
+		<!-- <script src="canvas-editor.js"></script> -->
+	</body>
+</html>
