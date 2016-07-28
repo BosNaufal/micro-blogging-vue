@@ -1,6 +1,6 @@
 
 body {
-  width: 360px;
+  /*width: 360px;*/
   margin: 0 auto;
 }
 
@@ -9,7 +9,7 @@ body {
 }
 
 /*=======[ Canvas Toolbar ]=======*/
-canvas-toolbar{
+[canvas=toolbar]{
   display: block;
   text-align: center;
   background: #ECECEC;
@@ -17,55 +17,67 @@ canvas-toolbar{
   padding: 7px;
 }
 
-canvas-toolbar button{
+[canvas=toolbar] button{
   min-width: 35px;
   margin-right: 5px;
 }
 
+[canvas=toolbar] button[raw] {
+  display: none;
+}
+
 /*=======[ Canvas Editor ]=======*/
-canvas-editor{
+[canvas=editor]{
   display: block;
   background: white;
   padding: 15px;
   width: 100%;
   max-width: 950px;
   margin: 0 auto 15px;
+  text-align: justify;
 }
 
-canvas-editor.canvas-read-mode canvas-actions{
+[canvas=editor].canvas-read-mode [canvas=actions]{
   display: none;
 }
 
+[canvas=editor] h4{
+  margin: 7px 0;
+  font-size: 1.6rem;
+}
+
 /*=======[ Canvas Sub Editor ]=======*/
-canvas-sub-editor {
+[canvas=sub-editor] {
   display: block;
 }
 
-canvas-sub-editor .canvas-focus {
+[canvas=sub-editor] .canvas-focus {
   border: 1px solid #5c90d2;
   padding: 5px;
 }
 
-canvas-sub-editor *{
+[canvas=sub-editor] *{
   outline: none;
 }
 
-canvas-sub-editor.sortable-ghost {
+[canvas=sub-editor].sortable-ghost, li.sortable-ghost {
   border: 3px dashed #DDD;
   margin-bottom: 15px;
+  list-style: none;
 }
 
-canvas-sub-editor.sortable-ghost *{
+[canvas=sub-editor].sortable-ghost *, li.sortable-ghost *{
   color: transparent;
   background: transparent;
 }
 
-canvas-sub-editor.sortable-ghost canvas-actions button{
+[canvas=sub-editor].sortable-ghost [canvas=actions] button, li.sortable-ghost [canvas=actions] button{
   background: white;
   border-color: white;
 }
 
-canvas-sub-editor.sortable-dragging{
+[canvas=sub-editor].sortable-dragging, li.sortable-dragging{
+  list-style: none;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
   /*background: #FFFF93;*/
   background: white;
@@ -74,56 +86,100 @@ canvas-sub-editor.sortable-dragging{
   padding: 5px;
 }
 
-canvas-sub-editor.sortable-dragging canvas-actions{
+[canvas=sub-editor].sortable-dragging [canvas=actions], li.sortable-dragging [canvas=actions]{
   display: none;
 }
 
-canvas-sub-editor.sortable-dragging span.number{
+/*[canvas=sub-editor].sortable-dragging span.number{
   color: transparent;
-}
+}*/
 
-canvas-list canvas-sub-editor span.number {
+/*[canvas=list] [canvas=sub-editor] span.number {
   display: inline-block;
   width: 9%;
   float: left;
 }
 
 
-canvas-list canvas-sub-editor p{
+[canvas=list] [canvas=sub-editor] p{
   display: inline-block;
   width: 91%;
   float: left;
-}
+}*/
 
-canvas-list canvas-actions {
+[canvas=list] [canvas=actions] {
   clear: both;
-  margin-left: 9%;
   display: block;
 }
 
-/*canvas-sub-editor:hover canvas-actions {
+/*[canvas=sub-editor]:hover [canvas=actions] {
   display: block;
 }*/
 
 /*=======[ Canvas Actions ]=======*/
-canvas-actions {
+[canvas=actions] {
   display: block;
   margin: 5px auto 15px;
 }
 
 /*=======[ Canvas List ]=======*/
-canvas-list{
+[canvas=list]{
   display: block;
-  padding: 5px 0 5px 15px;
+  margin-top: 5px;
+  margin: 25px 0 30px;
+}
+
+[canvas=list] li h4{
+  margin-left: 15px;
+}
+
+[canvas=list] ol, [canvas=list] ul{
+  padding-left: 27px;
+}
+
+.circle-list{
+  list-style: circle;
+}
+.square-list{
+  list-style: square;
+}
+.upper-alpha{
+  list-style: upper-alpha;
+}
+.lower-alpha{
+  list-style: lower-alpha;
+}
+.upper-roman{
+  list-style: upper-roman;
+}
+.lower-roman{
+  list-style: lower-roman;
+}
+
+[canvas=list] ol li [canvas=sub-editor], [canvas=list] ul li [canvas=sub-editor]{
+  margin-left: 15px;
 }
 
 /*=======[ Canvas Editable ]=======*/
-canvas-editable {
+[canvas=editable] {
   cursor: pointer;
+  background: #cbf7cb;
+  padding: 1px 5px;
+  font-size: 1.3rem;
+  color: #6d9a6d;
 }
 
 /*=======[ Canvas Popover ]=======*/
-canvas-popover{
+[canvas=popover]{
+  box-shadow: 0 -3px 3px 0 rgba(0,0,0,.1);
+  display: inline-block;
+  background: white;
+  padding: 15px;
+  border: 1px solid #ddd;
+  position: absolute;
+}
+
+/*[canvas=popover]{
   box-shadow: 0 -3px 3px 0 rgba(0,0,0,.1);
   width: 100%;
   display: block;
@@ -133,43 +189,115 @@ canvas-popover{
   position: fixed;
   bottom: 0;
   left: 0;
+}*/
+
+[canvas=popover]{
+  min-width: 320px;
+  /*width: 360px;*/
+  /*left: 36.7%;*/
 }
 
-canvas-popover{
-  width: 360px;
-  left: 36.7%;
-}
-
-canvas-popover.hide{
+[canvas=popover].hide{
   display: none;
 }
-canvas-popover .main-input{
+[canvas=popover] .main-input{
   text-align: center;
 }
-canvas-popover .pika-lendar{
+[canvas=popover] .pika-lendar{
   width: 93%;
 }
-canvas-popover .pika-single{
+[canvas=popover] .pika-single{
   border: 0;
   margin: 10px auto;
 }
-canvas-popover input, canvas-popover select{
+[canvas=popover] input, [canvas=popover] select{
   width: 100%;
   border: 1px solid #ddd;
   padding: 7px;
   background: white;
 }
 
-canvas-popover [popover-radio-check] {
+[canvas=popover] [popover-radio-check] {
   text-align: left;
   margin-top: 15px;
 }
 
-canvas-popover input[type=checkbox], canvas-popover input[type=radio]{
+[canvas=popover] input[type=checkbox], [canvas=popover] input[type=radio]{
   width: auto;
 }
 
-canvas-popover label{
+[canvas=popover] label{
   margin-right: 8px;
   vertical-align: middle;
 }
+
+[canvas=modal] {
+  position: fixed;
+  top: 20%;
+  left: 27%;
+  display: block;
+  width: 45%;
+  background: white;
+  padding: 17px;
+  text-align: center;
+}
+
+[canvas=modal] .btn{
+  margin-bottom: 10px;
+}
+
+[canvas=modal] p{
+  margin-bottom: 15px;
+}
+
+[canvas=overlay] {
+  width: 100%;
+  height: 100%;
+  background: black;
+  top: 0;
+  left: 0;
+  position: fixed;
+  opacity: 0.7;
+}
+
+/*---- 1. SOME TABLET (800 px) ----------------*/
+@media only screen and (width:800px) { }
+
+/*---- 2. SMALLER MOBILE LANDSCAPE ----------------*/
+@media only screen and (min-width:479px) { }
+
+/*---- 3. SMALLER MOBILE POTRAIT ----------------*/
+@media only screen and (min-width:319px) { }
+
+/*---- 4. SMALL MOBILE POTRAIT ----------------*/
+@media only screen and (min-width:359px) { }
+
+/*---- 5. SMALL MOBILE LANDSCAPE ----------------*/
+@media only screen and (min-width:639px) {
+  [canvas=editor] {
+    font-size: 1.6rem;
+  }
+  [canvas=editor] h4{
+    font-size: 1.7rem;
+  }
+}
+
+/*---- 6. DEFAULT DESKTOP ----------------*/
+@media only screen and (min-width:767px) {
+  [canvas=editor] {
+    padding: 25px 30px;
+  }
+}
+
+/*---- 7. TABLET ----------------*/
+@media only screen and (min-width:1023px) {
+  [canvas=editor] {
+    padding: 25px 50px;
+  }
+}
+
+/*---- 8. MEDIUM DESKTOP ----------------*/
+@media only screen and (min-width:1024px) and (max-width:1199px) { }
+
+/*---- 9. LARGE DESKTOP ----------------*/
+@media only screen and (min-width:1200px) { }
